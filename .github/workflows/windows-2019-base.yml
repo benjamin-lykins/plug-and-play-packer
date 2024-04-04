@@ -21,6 +21,8 @@ jobs:
           AZURE_LOCATION: "East US"
           AZURE_RG_NAME: "packer-rg"
         run: |
+          sudo apt update
+          sudo apt install curl
           echo "Install Azure CLI"
           sh 'curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash'
 
