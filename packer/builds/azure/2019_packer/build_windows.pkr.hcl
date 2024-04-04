@@ -7,7 +7,8 @@ data "hcp-packer-version" "latest" {
 source "azure-arm" "windows" {
 
   // Grab the latest version of the Windows Server 2019 Datacenter
-  custom_managed_image_name = data.hcp-packer-version.latest.version.name
+  custom_managed_image_name = data.hcp-packer-version.latest.name
+  custom_managed_image_resource_group_name = "packer-rg"
 
   //  Managed images and resource group.
   managed_image_name                = "windows-${var.windows_version}-${local.time}"
