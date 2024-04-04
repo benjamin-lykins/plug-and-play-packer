@@ -39,6 +39,13 @@ source "azure-arm" "windows" {
   winrm_timeout  = "7m"
   winrm_use_ssl  = true
   winrm_username = "packer"
+
+  azure_tags = {
+    "source_image" = "${data.hcp-packer-artifact.latest.image_name}"
+    "os"           = "windows"
+    "version"      = "${var.windows_version}"
+    "image_version" = "${data.hcp-packer-version.latest.version}"
+  }
 }
 
 build {
