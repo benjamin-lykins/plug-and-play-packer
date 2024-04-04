@@ -21,13 +21,11 @@ jobs:
           AZURE_LOCATION: "East US"
           AZURE_RG_NAME: "packer-rg"
         run: |
-          sudo apt update
-          sudo apt install curl
           echo "Install Azure CLI"
-          sh 'curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash'
+          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
           echo "Login to Azure"
-          sh "az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}"
+          az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}
 
           echo "Check for Resource Group"
           az group show --name packer-rg
