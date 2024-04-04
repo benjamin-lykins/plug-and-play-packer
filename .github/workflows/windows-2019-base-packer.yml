@@ -35,11 +35,11 @@ jobs:
 
       - name: Run `packer init`
         id: init
-        run: "packer init ./packer/builds/azure/2019/."
+        run: "packer init ./packer/builds/azure/2019_packer/."
 
       - name: Run `packer validate`
         id: validate
-        run: packer validate ./packer/builds/azure/2019/.
+        run: packer validate ./packer/builds/azure/2019_packer/.
 
       - name: Run `packer build`
         id: build
@@ -52,4 +52,4 @@ jobs:
           -var "azure_subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" \
           -var "azure_client_id=${{ secrets.AZURE_CLIENT_ID }}" \
           -var "azure_client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" \
-          ./packer/builds/azure/2019/.
+          ./packer/builds/azure/2019_packer/.
