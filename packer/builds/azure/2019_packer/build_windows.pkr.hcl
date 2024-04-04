@@ -14,7 +14,7 @@ data "hcp-packer-artifact" "latest" {
 source "azure-arm" "windows" {
 
   // Grab the latest version of the Windows Server 2019 Datacenter
-  custom_managed_image_name = data.hcp-packer-artifact.latest.image_name
+  custom_managed_image_name = data.hcp-packer-artifact.latest.external_identifier
   custom_managed_image_resource_group_name = "packer-rg"
 
   //  Managed images and resource group.
