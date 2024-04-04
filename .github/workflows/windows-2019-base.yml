@@ -1,0 +1,68 @@
+name: windows-2019-base
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packer/**/*windows*"
+  workflow_dispatch:
+
+jobs:
+  packer:
+    runs-on: ubuntu-latest
+    name: Run Packer
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+    
+      - name: Create Azure Resource Group
+        env:
+          AZURE_LOCATION: "East US"
+          AZURE_RG_NAME: "packer-rg"
+        run: |
+          echo "Install Azure CLI"
+          sh 'curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash'
+
+          echo "Login to Azure"
+          sh "az login --service-principal -u ${{ secrets.AZURE_CLIENT_ID }} -p ${{ secrets.AZURE_CLIENT_SECRET }} --tenant ${{ secrets.AZURE_TENANT_ID }}"
+
+          echo "Check for Resource Group"
+          az group show --name packer-rg
+          echo "::set-output name=exists::${?}"
+
+          echo "Create Resource Group if it doesn't exist"
+          exists=${{ steps.check_rg.outputs.exists }}
+          if [ $exists -eq 0 ]; then
+            echo "Resource group 'packer-rg' already exists."
+          else
+            az group create --name packer-rg --location eastus
+            echo "Resource group 'packer-rg' created."
+          fi
+
+      - name: Setup `packer`
+        uses: hashicorp/setup-packer@main
+        id: setup
+        with:
+          version: "latest" # or latest
+
+      - name: Run `packer init`
+        id: init
+        run: "packer init ./packer/builds/azure/2019/."
+
+      - name: Run `packer validate`
+        id: validate
+        run: packer validate ./packer/builds/azure/2019/.
+
+      - name: Run `packer build`
+        id: build
+        run: |
+          export HCP_CLIENT_ID=${{ secrets.HCP_CLIENT_ID }}
+          export HCP_CLIENT_SECRET=${{ secrets.HCP_CLIENT_SECRET }}
+
+          packer build \
+          -var "azure_tenant_id=${{ secrets.AZURE_TENANT_ID }}" \
+          -var "azure_subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" \
+          -var "azure_client_id=${{ secrets.AZURE_CLIENT_ID }}" \
+          -var "azure_client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" \
+          ./packer/builds/azure/2019/.
