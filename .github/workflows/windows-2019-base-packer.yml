@@ -1,4 +1,4 @@
-name: windows-2019-base
+name: windows-2019-hcp
 
 on:
   push:
