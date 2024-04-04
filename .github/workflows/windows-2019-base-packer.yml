@@ -7,10 +7,15 @@ on:
     paths:
       - "packer/**/*windows*"
   workflow_dispatch:
+  workflow_run:
+    workflows: ["windows-2019-base"]
+    types:
+      - completed
 
 jobs:
   packer:
     runs-on: ubuntu-latest
+    if: github.event.workflow_run.conclusion == 'success'
     name: Run Packer
     steps:
       - name: Checkout
