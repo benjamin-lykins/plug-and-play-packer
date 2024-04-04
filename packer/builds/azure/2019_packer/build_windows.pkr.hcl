@@ -1,8 +1,15 @@
 data "hcp-packer-version" "latest" {
   bucket_name  = "windows-2019-base"
   channel_name = "latest"
-
 }
+
+data "hcp-packer-artifact" "latest" {
+  bucket_name         = data.hcp-packer-version.latest.bucket_name
+  version_fingerprint = data.hcp-packer-version.latest.fingerprint
+  platform            = "azure"
+  region              = "East US"
+}
+
 
 source "azure-arm" "windows" {
 
