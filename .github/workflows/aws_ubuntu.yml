@@ -36,8 +36,9 @@ jobs:
       - name: Run `packer build`
         id: build
         run: |
-          export HCP_CLIENT_ID=${{ secrets.HCP_CLIENT_ID }}
-          export HCP_CLIENT_SECRET=${{ secrets.HCP_CLIENT_SECRET }}
+            export HCP_CLIENT_ID=${{ secrets.HCP_CLIENT_ID }}
+            export HCP_CLIENT_SECRET=${{ secrets.HCP_CLIENT_SECRET }}
 
-          packer build \
-          ./packer/builds/aws/.
+            packer build \
+            -var 'run_id=${{ github.run_id }}}' \
+            ./packer/builds/aws/.

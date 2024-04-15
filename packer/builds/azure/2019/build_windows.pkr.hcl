@@ -67,21 +67,4 @@ build {
     }
   }
 }
-
-customize {
-    windows_options {
-      computer_name = "win${var.windows_version}-${lookup("${local.sql_version}","${var.sql}","sql2019")}"
-      admin_password = var.winrm_password
-      run_once_command_list = ["cmd.exe /c powershell.exe a:\\winrmConfig.ps1"]
-      auto_logon = true
-      auto_logon_count = 2
-    }
-    network_interface {
-      ipv4_address = var.ipaddress
-      ipv4_netmask = "24"
-    }
- 
-    ipv4_gateway    = var.gateway
-    dns_server_list = var.dnsServers
-  }
  
