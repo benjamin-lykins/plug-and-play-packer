@@ -78,3 +78,40 @@ build {
     }
   }
 }
+
+
+storage {
+  # Binaries 60GB = 60000 MB
+  # D Drive
+       disk_size = 60000
+    }
+    storage {
+    #  Data 100 GB = 100000 MB
+    # E Drive
+       disk_size = 100000
+    }
+    storage {
+    # Logs 50 GB = 50000 MB
+    # F Drive
+       disk_size = 50000
+    }
+    storage {
+    # TempDB Data 25 GB = 25000 MB
+    # G Drive
+       disk_size = 25000
+    }
+    storage {
+    # TempDB Logs 20 GB = 20000 MB
+    # H Drive
+       disk_size = 20000
+    }
+     storage {
+    # SSIS Package 5 GB = 5000 MB
+    # J Drive
+       disk_size = 5000
+    }
+    storage {
+    # Backup 50 GB = 50000 MB
+    # K Drive
+       disk_size = 50000
+    }
