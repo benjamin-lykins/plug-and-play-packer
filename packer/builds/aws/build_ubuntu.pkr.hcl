@@ -4,6 +4,10 @@ packer {
       version = ">= 1.2.8"
       source  = "github.com/hashicorp/amazon"
     }
+    cnspec = {
+      version = ">= 10.0.0"
+      source  = "github.com/mondoohq/cnspec"
+    }
   }
 }
 
@@ -33,4 +37,12 @@ build {
   sources = [
     "source.amazon-ebs.ubuntu"
   ]
+
+  provisioner "cnspec" {
+  on_failure          = "continue"
+  score_threshold     = 85
+  sudo {
+    active = true
+  }
+}
 }
