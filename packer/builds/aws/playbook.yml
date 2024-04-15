@@ -7,5 +7,5 @@
   tasks:
     - name: install Apache
       package:
-        name: "httpd"
+        name: "apache2"
         state: present
