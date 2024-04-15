@@ -40,5 +40,5 @@ jobs:
             export HCP_CLIENT_SECRET=${{ secrets.HCP_CLIENT_SECRET }}
 
             packer build \
-            -var 'run_id=${{ github.run_id }}}' \
+            -var 'run_id=${{ github.run_id }}' \
             ./packer/builds/aws/.
