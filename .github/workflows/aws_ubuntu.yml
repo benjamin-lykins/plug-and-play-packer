@@ -13,7 +13,7 @@ env:
 
 jobs:
   packer:
-    runs-on: aws
+    runs-on: self-hosted
     name: Run Packer
     steps:
       - name: Checkout
