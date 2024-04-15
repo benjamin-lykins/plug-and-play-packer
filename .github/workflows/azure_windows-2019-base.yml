@@ -8,9 +8,18 @@ on:
       - "packer/**/*windows*"
   workflow_dispatch:
 
+env: 
+  PKR_VAR_azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+  PKR_VAR_azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  PKR_VAR_azure_client_id : ${{ secrets.AZURE_CLIENT_ID  }}
+  PKR_VAR_azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+  PKR_VAR_winrm_password: ${{ secrets.WINRM_PASSWORD }}
+  PKR_VAR_ssh_password: ${{ secrets.SSH_PASSWORD }}
+
+
 jobs:
   packer:
-    runs-on: ubuntu-latest
+    runs-on: aws
     name: Run Packer
     steps:
       - name: Checkout
@@ -48,8 +57,4 @@ jobs:
           export HCP_CLIENT_SECRET=${{ secrets.HCP_CLIENT_SECRET }}
 
           packer build \
-          -var "azure_tenant_id=${{ secrets.AZURE_TENANT_ID }}" \
-          -var "azure_subscription_id=${{ secrets.AZURE_SUBSCRIPTION_ID }}" \
-          -var "azure_client_id=${{ secrets.AZURE_CLIENT_ID }}" \
-          -var "azure_client_secret=${{ secrets.AZURE_CLIENT_SECRET }}" \
           ./packer/builds/azure/2019/.
