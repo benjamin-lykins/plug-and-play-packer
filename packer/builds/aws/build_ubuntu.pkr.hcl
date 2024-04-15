@@ -43,7 +43,7 @@ build {
   ]
 
   provisioner "ansible" {
-    playbook_file = "./playbook.yml"
+    playbook_file = "./packer/builds/aws/playbook.yml"
   }
 
   provisioner "cnspec" {
