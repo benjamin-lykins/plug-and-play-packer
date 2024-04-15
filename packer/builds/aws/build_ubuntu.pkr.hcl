@@ -10,7 +10,7 @@ packer {
     }
     ansible = {
       version = "~> 1"
-      source = "github.com/hashicorp/ansible"
+      source  = "github.com/hashicorp/ansible"
     }
   }
 }
@@ -42,15 +42,15 @@ build {
     "source.amazon-ebs.ubuntu"
   ]
 
-      provisioner "ansible" {
-      playbook_file = "./playbook.yml"
-    }
+  provisioner "ansible" {
+    playbook_file = "./playbook.yml"
+  }
 
   provisioner "cnspec" {
-  on_failure          = "continue"
-  score_threshold     = 85
-  sudo {
-    active = true
+    on_failure      = "continue"
+    score_threshold = 85
+    sudo {
+      active = true
+    }
   }
-}
 }
