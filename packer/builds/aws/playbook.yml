@@ -5,7 +5,18 @@
   become: true
 
   tasks:
-    - name: install Apache
-      package:
-        name: "apache2"
-        state: present
+    - name: Create Folders in Home Directory
+      file:
+        path: "/home/user1/folder1"
+        state: directory
+        owner: user1
+        group: developers
+        mode: "0755"
+
+    - name: Create Folders in Home Directory
+      file:
+        path: "/home/user2/folder2"
+        state: directory
+        owner: user2
+        group: developers
+        mode: "0755"
