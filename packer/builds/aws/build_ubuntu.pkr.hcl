@@ -8,6 +8,10 @@ packer {
       version = ">= 10.0.0"
       source  = "github.com/mondoohq/cnspec"
     }
+    ansible = {
+      version = "~> 1"
+      source = "github.com/hashicorp/ansible"
+    }
   }
 }
 
@@ -37,6 +41,10 @@ build {
   sources = [
     "source.amazon-ebs.ubuntu"
   ]
+
+      provisioner "ansible" {
+      playbook_file = "./playbook.yml"
+    }
 
   provisioner "cnspec" {
   on_failure          = "continue"
