@@ -4,12 +4,14 @@ source "azure-arm" "windows" {
   image_publisher = "MicrosoftWindowsServer"
   image_offer     = "WindowsServer"
   image_sku       = "${var.windows_version}-Datacenter"
+  os_type         = "Windows"
+
 
   //  Managed images and resource group - exported after build. Resource Group needs to exist prior to build.
   managed_image_name                = "windows-${var.windows_version}-${local.time}"
   managed_image_resource_group_name = "packer-rg"
 
-  vm_size                  = "Standard_DS1_v2"
+  vm_size = "Standard_DS1_v2"
 
   // While buildding the image, this resource group is utilized.
   build_resource_group_name = "packer-builds-rg"
