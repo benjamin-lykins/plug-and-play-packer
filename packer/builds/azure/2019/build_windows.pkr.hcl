@@ -87,7 +87,3 @@ build {
     }
   }
 }
-
-vm_name   = var.rhel_build_type == "@^server-product-environment" ?  "rhel9.${var.rhel_minor}-${local.timestamp}" : "rhel9.${var.rhel_minor}-podman-${local.timestamp}"
-
-bucket_name = lookup(local.rhel_bucket_name, var.rhel_build_type, "rhel9-${var.rhel_minor}-base")
