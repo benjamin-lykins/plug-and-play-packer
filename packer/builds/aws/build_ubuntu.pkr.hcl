@@ -19,12 +19,6 @@ variable "run_id" {
   default = "nope"
 }
 
-locals {
-  rhel_bucket_name = {
-    "podman" = "rhel-9.${var.rhel_minor_version}-podman-base"
-    "base"   = "rhel-9.${var.rhel_minor_version}-base"
-  }
-}
 
 source "amazon-ebs" "ubuntu" {
   ami_name      = "ubuntu-demo-${var.run_id}"

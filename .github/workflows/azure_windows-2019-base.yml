@@ -29,7 +29,7 @@ jobs:
             curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
 
             echo "Logging into Azure..."
-            az login --service-principal -u '${{ secrets.AZURE_CLIENT_ID }}' -p '${{ secrets.AZURE_CLIENT_SECRET }}' --tenant '${{ secrets.AZURE_TENANT_ID }}'
+            az login --service-principal -u "${{ secrets.AZURE_CLIENT_ID }}" -p "${{ secrets.AZURE_CLIENT_SECRET }}" --tenant "${{ secrets.AZURE_TENANT_ID }}"
 
             echo "Creating Azure Resource Group..."
             az group show --name packer-rg || az group create --name packer-rg --location eastus
