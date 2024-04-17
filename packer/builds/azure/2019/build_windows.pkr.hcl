@@ -26,7 +26,7 @@ source "azure-arm" "windows" {
   winrm_insecure = true
   winrm_timeout  = "7m"
   winrm_use_ssl  = true
-  winrm_username = "packer"
+  winrm_username = "Administrator"
 }
 
 build {
@@ -37,6 +37,26 @@ build {
     inline = [
       "Write-Host '***** this is a demo message *****'"
     ]
+  }
+
+  provisioner "windows-update" {
+  }
+
+  provisioner "powershell" {
+    script = "packer/builds/scripts/base.ps1"
+    environment_vars = [
+      "MONDOO_REGISTRATION_TOKEN =${var.mondoo_registration_token}"
+    ]
+    elevated_user = "Administrator"
+    elevated_password = build.Password
+  }
+
+  provisioner "cnspec" {
+    on_failure      = "continue"
+    score_threshold = 85
+    sudo {
+      active = true
+    }
   }
 
   # Generalising the image
@@ -67,4 +87,7 @@ build {
     }
   }
 }
- 
+
+vm_name   = var.rhel_build_type == "@^server-product-environment" ?  "rhel9.${var.rhel_minor}-${local.timestamp}" : "rhel9.${var.rhel_minor}-podman-${local.timestamp}"
+
+bucket_name = lookup(local.rhel_bucket_name, var.rhel_build_type, "rhel9-${var.rhel_minor}-base")
