@@ -55,5 +55,4 @@ jobs:
           export HCP_CLIENT_SECRET=${{ secrets.HCP_CLIENT_SECRET }}
 
           packer build \
-          -var 'mondoo_registration=${{ secrets.MONDOO_REGISTRATION }}' \
           ./packer/builds/azure/2019/.
