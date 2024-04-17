@@ -1,0 +1,28 @@
+name: Packer Validate
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  packer:
+    runs-on: [self-hosted]
+    name: pr-validate
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup `packer`
+        uses: hashicorp/setup-packer@main
+        id: setup
+        with:
+          version: "latest" # or latest
+
+      - name: Run `packer init`
+        id: init
+        run: "packer init ./packer/builds/azure/2019/."
+
+      - name: Run `packer validate`
+        id: validate
+        run: "packer init ./packer/builds/azure/2019/."

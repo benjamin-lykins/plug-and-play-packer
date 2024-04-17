@@ -11,6 +11,14 @@ source "azure-arm" "windows" {
   managed_image_name                = "windows-${var.windows_version}-${local.time}"
   managed_image_resource_group_name = "packer-rg"
 
+  shared_image_gallery = {
+    subscription_id = var.azure_subscription_id
+    resource_group  = "packer-rg"
+    gallery_name    = "packer-gallery"
+    image_name      = "windows-${var.windows_version}-${local.time}"
+    image_version   = "1.0.0"
+  }
+
   vm_size = "Standard_DS1_v2"
 
   // While buildding the image, this resource group is utilized.
