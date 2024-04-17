@@ -39,17 +39,8 @@ build {
     ]
   }
 
-  provisioner "windows-update" {
-  }
-
-  provisioner "powershell" {
-    script = "packer/builds/scripts/base.ps1"
-    environment_vars = [
-      "MONDOO_REGISTRATION_TOKEN =${var.mondoo_registration_token}"
-    ]
-    elevated_user = "Administrator"
-    elevated_password = build.Password
-  }
+  // provisioner "windows-update" {
+  // }
 
   provisioner "cnspec" {
     on_failure      = "continue"
