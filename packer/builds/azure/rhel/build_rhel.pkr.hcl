@@ -51,7 +51,7 @@ source "azure-arm" "rhel" {
   vm_size                  = "Standard_DS1_v2"
   temp_resource_group_name = "packer-rg-temp-${local.time}"
   location                 = "East US"
-  os_type                  = "Windows"
+  os_type                  = "linux"
 
   // // Create a managed image and share it to a gallery
   // shared_image_gallery_destination {
