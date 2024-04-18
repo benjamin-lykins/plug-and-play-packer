@@ -17,8 +17,6 @@ env:
   PKR_VAR_azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   PKR_VAR_azure_client_id : ${{ secrets.AZURE_CLIENT_ID  }}
   PKR_VAR_azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-  PKR_VAR_winrm_password: ${{ secrets.WINRM_PASSWORD }}
-  PKR_VAR_ssh_password: ${{ secrets.SSH_PASSWORD }}
 
 jobs:
   packer:
