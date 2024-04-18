@@ -1,11 +1,6 @@
-name: windows-2019-base
+name: rhel9-base
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "packer/**/*windows*"
   workflow_dispatch:
 
 env: 
