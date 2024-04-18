@@ -1,0 +1,58 @@
+name: windows-2019-base
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "packer/**/*windows*"
+  workflow_dispatch:
+
+env: 
+  PKR_VAR_azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+  PKR_VAR_azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  PKR_VAR_azure_client_id : ${{ secrets.AZURE_CLIENT_ID  }}
+  PKR_VAR_azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+  PKR_VAR_mondoo_registration: ${{ secrets.MONDOO_REGISTRATION }}
+
+jobs:
+  packer:
+    runs-on: ubuntu-latest
+    name: Run Packer
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+    
+      - name: Create Azure Resource Group
+        run: |
+            echo "Getting Azure CLI..."
+            curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
+
+            echo "Logging into Azure..."
+            az login --service-principal -u "${{ secrets.AZURE_CLIENT_ID }}" -p "${{ secrets.AZURE_CLIENT_SECRET }}" --tenant "${{ secrets.AZURE_TENANT_ID }}"
+
+            echo "Creating Azure Resource Group..."
+            az group show --name packer-rg || az group create --name packer-rg --location eastus
+
+      - name: Setup `packer`
+        uses: hashicorp/setup-packer@main
+        id: setup
+        with:
+          version: "latest" # or latest
+
+      - name: Run `packer init`
+        id: init
+        run: "packer init ./packer/builds/rhel/."
+
+      - name: Run `packer validate`
+        id: validate
+        run: packer validate ./packer/builds/rhel/.
+
+      - name: Run `packer build`
+        id: build
+        run: |
+          export HCP_CLIENT_ID=${{ secrets.HCP_CLIENT_ID }}
+          export HCP_CLIENT_SECRET=${{ secrets.HCP_CLIENT_SECRET }}
+
+          packer build \
+          ./packer/builds/rhel/.
