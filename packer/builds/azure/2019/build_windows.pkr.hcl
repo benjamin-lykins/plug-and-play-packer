@@ -11,7 +11,7 @@ source "azure-arm" "windows" {
   managed_image_name                = "windows-${var.windows_version}-${local.time}"
   managed_image_resource_group_name = "packer-rg"
 
-  shared_image_gallery = {
+  shared_image_gallery  {
     subscription_id = var.azure_subscription_id
     resource_group  = "packer-rg"
     gallery_name    = "packer-gallery"
