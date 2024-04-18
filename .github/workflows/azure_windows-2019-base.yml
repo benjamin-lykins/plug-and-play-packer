@@ -56,3 +56,9 @@ jobs:
 
           packer build \
           ./packer/builds/azure/2019/.
+
+      - name: Terraform Plan
+        run: |
+          cd terraform
+          terraform init
+          terraform plan
