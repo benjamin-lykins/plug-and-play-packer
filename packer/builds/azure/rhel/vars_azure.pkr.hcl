@@ -21,8 +21,3 @@ variable "azure_client_secret" {
   description = "The client secret of the service principal, store in GitHub secrets"
   default     = ""
 }
-
-variable "windows_version" {
-  type    = number
-  default = 2019
-}
