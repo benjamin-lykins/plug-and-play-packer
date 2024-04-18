@@ -1,0 +1,54 @@
+name: test
+
+on:
+#  push:
+#    branches:
+#      - main
+#    paths:
+#      - "packer/**/*windows*"
+  workflow_dispatch:
+
+env:
+  PKR_VAR_azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
+  PKR_VAR_azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
+  PKR_VAR_azure_client_id : ${{ secrets.AZURE_CLIENT_ID  }}
+  PKR_VAR_azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
+  PKR_VAR_packer_server: ${{ secrets.PACKER_SERVER }}
+  PKR_VAR_packer_datacenter: ${{ secrets.PACKER_DATACENTER }}
+  PKR_VAR_packer_username: ${{ secrets.PACKER_USERNAME }}
+  PKR_VAR_packer_password: ${{ secrets.PACKER_PASSWORD }}
+  PKR_VAR_winrm_password: ${{ secrets.WINRM_PASSWORD }}
+  PKR_VAR_ssh_password: ${{ secrets.SSH_PASSWORD }}
+  HCP_CLIENT_SECRET: ${{ secrets.HCP_CLIENT_SECRET }}
+  HCP_PROJECT_ID: ${{ secrets.HCP_PROJECT_ID }}
+  HCP_CLIENT_ID: ${{ secrets.HCP_CLIENT_ID }}
+
+jobs:
+  packer:
+    runs-on: ubuntu-latest
+    name: Run Packer
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup `packer`
+        uses: hashicorp/setup-packer@main
+        id: setup
+        with:
+          version: "latest" # or latest
+
+      - name: Run `packer init`
+        id: init
+        run: packer init -upgrade ./packer/builds/azure/rhel/.
+
+      - name: Run `packer validate`
+        id: validate
+        run: |
+          packer validate \
+          ./packer/builds/azure/rhel/.
+
+      - name: Run `packer build`
+        id: build
+        run: |
+          packer build \
+          ./packer/builds/azure/rhel/.
