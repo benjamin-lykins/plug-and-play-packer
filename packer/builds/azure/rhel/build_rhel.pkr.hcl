@@ -81,7 +81,7 @@ source "azure-arm" "rhel2" {
   image_sku       = "9_2"
 
   //  Managed images and resource group.
-  managed_image_name                = "rhel-9-3-${local.time}"
+  managed_image_name                = "rhel-9-2-${local.time}"
   managed_image_resource_group_name = "packer-rg"
 
   vm_size                  = "Standard_DS1_v2"
