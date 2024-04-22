@@ -1,11 +1,11 @@
-data "hcp-packer-version" "latest" {
-  bucket_name  = "windows-2019-base"
+data "hcp-packer-version" "azure-latest" {
+  bucket_name  = "win${var.windows_version}-base"
   channel_name = "latest"
 }
 
-data "hcp-packer-artifact" "latest" {
-  bucket_name         = data.hcp-packer-version.latest.bucket_name
-  version_fingerprint = data.hcp-packer-version.latest.fingerprint
+data "hcp-packer-artifact" "azure-latest" {
+  bucket_name         = data.hcp-packer-version.azure-latest.bucket_name
+  version_fingerprint = data.hcp-packer-version.azure-latest.fingerprint
   platform            = "azure"
   region              = "East US"
 }
@@ -14,7 +14,7 @@ data "hcp-packer-artifact" "latest" {
 source "azure-arm" "windows" {
 
   // Grab the latest version of the Windows Server 2019 Datacenter
-  custom_managed_image_name = data.hcp-packer-artifact.latest.external_identifier
+  custom_managed_image_name = data.hcp-packer-artifact.azure-latest.external_identifier
   custom_managed_image_resource_group_name = "packer-rg"
 
   //  Managed images and resource group.
