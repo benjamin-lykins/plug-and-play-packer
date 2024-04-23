@@ -8,7 +8,7 @@ source "azure-arm" "windows" {
 
 
   //  Managed images and resource group - exported after build. Resource Group needs to exist prior to build.
-  managed_image_name                = "windows-${var.windows_version}-${local.time}"
+  managed_image_name                = "windows-${var.windows_version}-${local.time}-no-gallery"
   managed_image_resource_group_name = "ben-packer-rg"
 
   // shared_image_gallery  {
