@@ -3,13 +3,13 @@ source "azure-arm" "windows" {
   // Grab the latest version of the Windows Server 2019 Datacenter
   image_publisher = "MicrosoftWindowsServer"
   image_offer     = "WindowsServer"
-  image_sku       = "${var.windows_version}-Datacenter"
+  image_sku       = "${var.windows_version}-datacenter-gensecond"
   os_type         = "Windows"
 
 
   //  Managed images and resource group - exported after build. Resource Group needs to exist prior to build.
-  managed_image_name                = "windows-${var.windows_version}-${local.time}-secure"
-  managed_image_resource_group_name = "ben-packer-rg"
+  // managed_image_name                = "windows-${var.windows_version}-${local.time}-secure"
+  // managed_image_resource_group_name = "ben-packer-rg"
 
   secure_boot_enabled = true
   vtpm_enabled = true
