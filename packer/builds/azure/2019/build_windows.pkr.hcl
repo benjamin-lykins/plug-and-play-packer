@@ -21,10 +21,7 @@ source "azure-arm" "windows" {
     gallery_name    = "ben_packer_gallery"
     image_name      = "windows-${var.windows_version}"
     image_version   = "1.0.${local.patch_version}"
-  }
-
-  resource_group_name = "ben-packer-rg"
-  
+  }  
 
   vm_size = "Standard_DS1_v2"
 
