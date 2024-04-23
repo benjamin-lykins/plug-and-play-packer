@@ -30,7 +30,7 @@ module "windows" {
   resource_group_name = azurerm_resource_group.this.name
   size                = "Standard_DS1_v2"
   image_os            = "windows"
-  os_simple           = "WindowsServer"
+  source_image_id     = "value"
   subnet_id           = azurerm_subnet.this.id
 
   admin_password = sensitive(random_password.this.result)
