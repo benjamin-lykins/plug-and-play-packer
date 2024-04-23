@@ -16,7 +16,7 @@ source "azure-arm" "windows" {
   security_type = "TrustedLaunch"
 
   shared_image_gallery_destination  {
-    subscription_id = var.azure_subscription_id
+    subscription = var.azure_subscription_id
     resource_group  = "ben-packer-rg"
     gallery_name    = "ben_packer_gallery"
     image_name      = "windows-${var.windows_version}"
