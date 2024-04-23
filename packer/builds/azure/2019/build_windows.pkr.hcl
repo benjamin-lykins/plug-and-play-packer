@@ -3,7 +3,7 @@ source "azure-arm" "windows" {
   // Grab the latest version of the Windows Server 2019 Datacenter
   image_publisher = "MicrosoftWindowsServer"
   image_offer     = "WindowsServer"
-  image_sku       = "${var.windows_version}-datacenter-gensecond"
+  image_sku       = "${var.windows_version}-Datacenter"
   os_type         = "Windows"
 
 
@@ -20,7 +20,7 @@ source "azure-arm" "windows" {
     resource_group  = "ben-packer-rg"
     gallery_name    = "ben_packer_gallery"
     image_name      = "windows-${var.windows_version}"
-    image_version   = "1.0.${local.patch_version}"
+    image_version   = "1.0.${local.patch_version}02"
   }  
 
   vm_size = "Standard_DS1_v2"
