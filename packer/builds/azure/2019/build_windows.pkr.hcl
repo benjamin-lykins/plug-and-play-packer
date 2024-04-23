@@ -13,14 +13,18 @@ source "azure-arm" "windows" {
 
   secure_boot_enabled = true
   vtpm_enabled = true
-security_type = "TrustedLaunch"
-  // shared_image_gallery_destination  {
-  //   subscription_id = var.azure_subscription_id
-  //   resource_group  = "ben-packer-rg"
-  //   gallery_name    = "ben_packer_gallery"
-  //   image_name      = "windows-${var.windows_version}"
-  //   image_version   = "1.0.${local.patch_version}"
-  // }
+  security_type = "TrustedLaunch"
+
+  shared_image_gallery_destination  {
+    subscription_id = var.azure_subscription_id
+    resource_group  = "ben-packer-rg"
+    gallery_name    = "ben_packer_gallery"
+    image_name      = "windows-${var.windows_version}"
+    image_version   = "1.0.${local.patch_version}"
+  }
+
+  resource_group_name = "ben-packer-rg"
+  
 
   vm_size = "Standard_DS1_v2"
 
