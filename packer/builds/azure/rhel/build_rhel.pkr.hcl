@@ -39,8 +39,6 @@ source "azure-arm" "rhel" {
   client_id       = var.azure_client_id
   client_secret   = var.azure_client_secret
   tenant_id       = var.azure_tenant_id
-
-  // WinRM Connection, this is recommended for Windows, SSH would be the recommendation for Linux distributions.
 }
 
 source "azure-arm" "windows" {
