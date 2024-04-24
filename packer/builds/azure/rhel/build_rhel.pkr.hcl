@@ -20,7 +20,7 @@ source "azure-arm" "rhel" {
 
   //  Managed images and resource group.
   managed_image_name                = "rhel-9-3-${local.time}"
-  managed_image_resource_group_name = "ben-packer-rg"
+  managed_image_resource_group_name = "ben-packer-new-rg"
 
   // While building the image, this resource group is utilized.
   build_resource_group_name = "ben-packer-builds-rg"
