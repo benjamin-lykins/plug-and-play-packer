@@ -1,4 +1,4 @@
-variable "windows_version" {
+variable "rhel_minor_version" {
   type    = number
-  default = 2019
+  default = 3
 }
