@@ -16,7 +16,7 @@ source "azure-arm" "rhel" {
   // Grab the latest version of the Windows Server 2019 Datacenter
   image_publisher = "redhat"
   image_offer     = "RHEL"
-  image_sku       = "9_${var.rhel_minor_version}"
+  image_sku       = "9${var.rhel_minor_version}-gen2"
 
   //  Managed images and resource group.
   managed_image_name                = "rhel-9-3-${local.time}"
