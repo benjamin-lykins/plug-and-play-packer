@@ -9,7 +9,7 @@ source "azure-arm" "windows" {
 
   //  Managed images and resource group - exported after build. Resource Group needs to exist prior to build.
   managed_image_name                = "windows-${var.windows_version}-${local.time}-secure"
-  managed_image_resource_group_name = "ben-packer-rg"
+  managed_image_resource_group_name = "ben-packer-new-rg"
 
   // secure_boot_enabled = true
   // vtpm_enabled = true
@@ -17,7 +17,7 @@ source "azure-arm" "windows" {
 
   shared_image_gallery_destination  {
     subscription = var.azure_subscription_id
-    resource_group  = "ben-packer-rg"
+    resource_group  = "ben-packer-new-rg"
     gallery_name    = "ben_packer_gallery"
     image_name      = "windows-${var.windows_version}"
     image_version   = "1.0.${local.patch_version}02"
