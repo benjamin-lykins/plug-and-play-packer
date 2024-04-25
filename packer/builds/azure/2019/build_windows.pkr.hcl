@@ -3,7 +3,7 @@ source "azure-arm" "windows" {
   // Grab the latest version of the Windows Server 2019 Datacenter
   image_publisher = "MicrosoftWindowsServer"
   image_offer     = "WindowsServer"
-  image_sku       = "${var.windows_version}-datacenter-gensecond"
+  image_sku       = var.windows_version == 2022 ? "${var.windows_version}-datacenter-azure-edition" : "${var.windows_version}-datacenter-gensecond"
   os_type         = "Windows"
 
 
@@ -67,7 +67,7 @@ build {
   # Generalising the image
   # This only runs on the Azure source.
   provisioner "powershell" {
-    only = ["source.azure-arm.windows"]
+    only = ["azure-arm.windows"]
     inline = [
       "Write-host '=== Azure image build completed successfully ==='",
       "Write-host '=== Generalising the image ... ==='",
