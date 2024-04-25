@@ -55,4 +55,5 @@ jobs:
           export HCP_CLIENT_SECRET=${{ secrets.HCP_CLIENT_SECRET }}
 
           packer build \
+          -force \
           ./packer/builds/azure/2019/.
