@@ -180,7 +180,7 @@ source "azure-arm" "windows4" {
 
 
 build {
-  sources = ["source.azure-arm.windows", "source.azure-arm.windows2", "source.azure-arm.windows3"]
+  sources = ["source.azure-arm.windows", "source.azure-arm.windows2", "source.azure-arm.windows3", "source.azure-arm.windows4"]
 
   provisioner "powershell" {
     pause_before = "5s"
