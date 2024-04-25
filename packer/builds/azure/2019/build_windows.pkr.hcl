@@ -60,13 +60,13 @@ source "azure-arm" "windows2" {
   // vtpm_enabled = true
   // security_type = "TrustedLaunch"
 
-  shared_image_gallery_destination {
-    subscription   = var.azure_subscription_id
-    resource_group = "ben-packer-new-rg"
-    gallery_name   = "ben_packer_gallery"
-    image_name     = "windows-${var.windows_version}"
-    image_version  = "1.0.${local.patch_version}02222"
-  }
+  // shared_image_gallery_destination {
+  //   subscription   = var.azure_subscription_id
+  //   resource_group = "ben-packer-new-rg"
+  //   gallery_name   = "ben_packer_gallery"
+  //   image_name     = "windows-${var.windows_version}"
+  //   image_version  = "1.0.${local.patch_version}02222"
+  // }
 
   vm_size = "Standard_DS1_v2"
 
