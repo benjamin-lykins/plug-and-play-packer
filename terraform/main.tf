@@ -63,7 +63,7 @@ module "windows" {
   resource_group_name = azurerm_resource_group.this.name
   size                = "Standard_DS1_v2"
   image_os            = "windows"
-  source_image_id     = "/subscriptions/16d750eb-6d45-404c-a06a-a507a663be9e/resourceGroups/demo-packer-rg/providers/Microsoft.Compute/images/windows-2019-20240513150258-secure"
+  source_image_id     = data.hcp_packer_artifact.this.external_identifier
   subnet_id           = azurerm_subnet.this.id
 
   admin_password = sensitive(random_password.this.result)
