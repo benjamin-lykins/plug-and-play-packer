@@ -70,6 +70,6 @@ resource "azurerm_subnet" "this" {
 }
 
 resource "azurerm_resource_group" "this" {
-  name     = "ben-rg"
+  name     = "tf-packer-demo-rg"
   location = "eastus"
 }
