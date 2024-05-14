@@ -17,8 +17,16 @@ terraform {
   }
 }
 
+variable "client_secret" {
+  type = string
+}
+
 provider "azurerm" {
   features {}
+  client_id       = "a7f2a9cc-2bd5-43f5-bf7e-fa244b298316"
+  client_secret   = var.client_secret
+  tenant_id       = "ab2e4aa2-3855-48b9-8d02-619cee6d9513"
+  subscription_id = "16d750eb-6d45-404c-a06a-a507a663be9e"
 }
 
 module "windows" {
