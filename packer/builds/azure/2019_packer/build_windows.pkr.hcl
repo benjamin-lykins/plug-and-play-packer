@@ -63,7 +63,7 @@ build {
   }
 
   hcp_packer_registry {
-    bucket_name = "windows-${var.windows_version}-layered"
+    bucket_name = "windows-${var.windows_version}-"
     description = <<EOT
       This is a base image for Windows Server ${var.windows_version} Datacenter.
     EOT

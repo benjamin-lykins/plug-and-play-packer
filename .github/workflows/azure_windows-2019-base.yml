@@ -97,5 +97,8 @@ jobs:
 
       - name: Terraform Apply
         id: apply
-        run: terraform apply -auto-approve -var client_secret="${ARM_CLIENT_SECRET}"
+        run: |
+         export HCP_CLIENT_ID=${{ secrets.HCP_CLIENT_ID }}
+         export HCP_CLIENT_SECRET=${{ secrets.HCP_CLIENT_SECRET }}
+         terraform apply -auto-approve -var client_secret="${ARM_CLIENT_SECRET}"
         working-directory: terraform

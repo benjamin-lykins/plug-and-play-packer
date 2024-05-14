@@ -14,12 +14,33 @@ terraform {
       source  = "hashicorp/azurerm"
       version = "3.99.0"
     }
+    hcp = {
+      source  = "hashicorp/hcp"
+      version = "0.89.0"
+    }
   }
+}
+
+data "hcp_packer_version" "this" {
+  bucket_name  = var.bucket_name
+  channel_name = "latest"
+}
+
+data "hcp_packer_artifact" "this" {
+  bucket_name         = data.hcp_packer_version.this.bucket_name
+  version_fingerprint = data.hcp_packer_version.this.fingerprint
+  platform            = "azure"
+  region              = "East US"
 }
 
 variable "client_secret" {
   type = string
 }
+
+variable "bucket_name" {
+  type = string
+}
+
 
 provider "azurerm" {
   features {}
@@ -27,6 +48,10 @@ provider "azurerm" {
   client_secret   = var.client_secret
   tenant_id       = "ab2e4aa2-3855-48b9-8d02-619cee6d9513"
   subscription_id = "16d750eb-6d45-404c-a06a-a507a663be9e"
+}
+
+provider "hcp" {
+  # Configuration options
 }
 
 module "windows" {
