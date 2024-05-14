@@ -1,9 +1,9 @@
 terraform {
   cloud {
-    organization = "RPTData"
+    organization = "lykins-demo-org"
 
     workspaces {
-      name = "cli-workspace"
+      name = "packer-azure"
     }
   }
 }

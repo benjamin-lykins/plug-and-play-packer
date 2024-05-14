@@ -16,6 +16,20 @@ env:
   PKR_VAR_mondoo_registration: ${{ secrets.MONDOO_REGISTRATION }}
 
 jobs:
+  runner:
+    runs-on: ubuntu-latest
+    name: Scale Nomad
+    steps:
+      - name: Allocate Runner
+        run: |
+            echo "Logging into Azure..."
+            az login --service-principal -u "${{ secrets.AZURE_CLIENT_ID }}" -p "${{ secrets.AZURE_CLIENT_SECRET }}" --tenant "${{ secrets.AZURE_TENANT_ID }}"
+
+            echo "Creating Nomad Azure Resource Group..."
+            az group show --name demo-nomad-rg || az group create --name demo-nomad-rg --location eastus
+
+            echo "Creating Nomad Azure VM..."
+            az vm show --resource-group demo-nomad-rg --name demo-nomad-vm || az vm create --resource-group demo-nomad-rg --name demo-nomad-vm --image UbuntuLTS --admin-username azureuser --generate-ssh-keys --size Standard_B1s --public-ip-address-allocation static --public-ip-sku Standard --vnet-name demo-nomad-vnet --subnet demo-nomad-subnet --nsg demo-nomad-nsg --tags "Name=demo-nomad-vm" "Environment=dev" "Project=nomad"
   packer:
     runs-on: ubuntu-latest
     name: Run Packer
@@ -57,3 +71,4 @@ jobs:
           packer build \
           -force \
           ./packer/builds/azure/2019/.
+    
