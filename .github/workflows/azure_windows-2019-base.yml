@@ -102,6 +102,6 @@ jobs:
          export HCP_CLIENT_SECRET=${{ secrets.HCP_CLIENT_SECRET }}
 
          terraform apply -auto-approve \
-         -var client_secret="${ARM_CLIENT_SECRET}"
+         -var client_secret="${ARM_CLIENT_SECRET}" \
          -var bucket_name="windows-2019-base"
         working-directory: terraform
