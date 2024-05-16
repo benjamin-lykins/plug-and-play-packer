@@ -98,10 +98,6 @@ jobs:
       - name: Terraform Apply
         id: apply
         run: |
-         export HCP_CLIENT_ID=${{ secrets.HCP_CLIENT_ID }}
-         export HCP_CLIENT_SECRET=${{ secrets.HCP_CLIENT_SECRET }}
-
          terraform apply -auto-approve \
-         -var client_secret="${ARM_CLIENT_SECRET}" \
          -var bucket_name="windows-2019-base"
         working-directory: terraform
