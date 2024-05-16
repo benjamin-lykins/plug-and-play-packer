@@ -3,7 +3,7 @@ terraform {
     organization = "lykins-demo-org"
 
     workspaces {
-      name = "packer-azure2"
+      name = "packer-azure"
     }
   }
 }
@@ -47,7 +47,7 @@ module "windows" {
   source  = "Azure/virtual-machine/azurerm"
   version = "1.1.0"
 
-  name                = "ben-win-vm2"
+  name                = "ben-win-vm"
   location            = "eastus"
   resource_group_name = azurerm_resource_group.this.name
   size                = "Standard_DS1_v2"
@@ -58,7 +58,7 @@ module "windows" {
   admin_password = sensitive(random_password.this.result)
 
   os_disk = {
-    name                 = "ben-wim-vm-osdisk2"
+    name                 = "ben-wim-vm-osdisk"
     caching              = "ReadWrite"
     storage_account_type = "Standard_LRS"
   }
@@ -72,18 +72,18 @@ resource "random_password" "this" {
 resource "azurerm_virtual_network" "this" {
   address_space       = ["10.0.0.0/16"]
   location            = "eastus"
-  name                = "ben-vnet2"
+  name                = "ben-vnet"
   resource_group_name = azurerm_resource_group.this.name
 }
 
 resource "azurerm_subnet" "this" {
   address_prefixes     = ["10.0.0.0/24"]
-  name                 = "ben-subnet2"
+  name                 = "ben-subnet"
   resource_group_name  = azurerm_resource_group.this.name
   virtual_network_name = azurerm_virtual_network.this.name
 }
 
 resource "azurerm_resource_group" "this" {
-  name     = "tf-packer-demo-rg2"
+  name     = "tf-packer-demo-rg"
   location = "eastus"
 }

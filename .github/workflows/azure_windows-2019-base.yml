@@ -82,25 +82,25 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
-        working-directory: terraform
+        working-directory: terraform/azure
         continue-on-error: true
 
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: terraform
+        working-directory: terraform/azure
 
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-        working-directory: terraform
+        working-directory: terraform/azure
 
       - name: Terraform Apply
         id: apply
         run: |
          terraform apply -auto-approve \
          -var bucket_name="windows-2019-base"
-        working-directory: terraform
+        working-directory: terraform/azure
  terraform-azure-2:
     needs: packer
     runs-on: ubuntu-latest
@@ -115,22 +115,22 @@ jobs:
       - name: Terraform fmt
         id: fmt
         run: terraform fmt -check
-        working-directory: terraform
+        working-directory: terraform/azure1
         continue-on-error: true
 
       - name: Terraform Init
         id: init
         run: terraform init
-        working-directory: terraform
+        working-directory: terraform/azure1
 
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
-        working-directory: terraform
+        working-directory: terraform/azure1
 
       - name: Terraform Apply
         id: apply
         run: |
          terraform apply -auto-approve \
          -var bucket_name="windows-2019-base"
-        working-directory: terraform
+        working-directory: terraform/azure1
