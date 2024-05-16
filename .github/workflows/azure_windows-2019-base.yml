@@ -68,10 +68,43 @@ jobs:
           -force \
           ./packer/builds/azure/2019/.
 
- terraform:
+ terraform-azure-1:
     needs: packer
     runs-on: ubuntu-latest
-    name: Run Terraform
+    name: Run Terraform Azure (1)
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Setup `terraform`
+        uses: hashicorp/setup-terraform@main
+        
+      - name: Terraform fmt
+        id: fmt
+        run: terraform fmt -check
+        working-directory: terraform
+        continue-on-error: true
+
+      - name: Terraform Init
+        id: init
+        run: terraform init
+        working-directory: terraform
+
+      - name: Terraform Validate
+        id: validate
+        run: terraform validate -no-color
+        working-directory: terraform
+
+      - name: Terraform Apply
+        id: apply
+        run: |
+         terraform apply -auto-approve \
+         -var bucket_name="windows-2019-base"
+        working-directory: terraform
+ terraform-azure-2:
+    needs: packer
+    runs-on: ubuntu-latest
+    name: Run Terraform Azure (2)
     steps:
       - name: Checkout
         uses: actions/checkout@v3
