@@ -46,6 +46,11 @@ jobs:
         run: terraform validate -no-color
         working-directory: terraform/azure-local
 
+      - name: Terraform Validate
+        id: pwd
+        run: pwd
+        working-directory: terraform/azure-local
+
       - name: Terraform Apply
         id: apply
         run: |
