@@ -46,7 +46,7 @@ jobs:
         run: terraform validate -no-color
         working-directory: terraform/azure-local
 
-      - name: Terraform Validate
+      - name: PWD
         id: pwd
         run: pwd
         working-directory: terraform/azure-local
@@ -54,6 +54,6 @@ jobs:
       - name: Terraform Apply
         id: apply
         run: |
-         terraform apply -auto-approve \
+         terraform apply\
          -var bucket_name="windows-2019-base"
         working-directory: terraform/azure-local
