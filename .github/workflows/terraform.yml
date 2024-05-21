@@ -10,10 +10,21 @@ on:
     inputs:
       platform:
         type: choice
-        description: 'Platform to deploy'
+        description: 'Platform'
         options:
         - 'azure'
         - 'vsphere'
+      image:
+        type: choice
+        description: 'Platform'
+        options:
+        - 'win2016'
+        - 'win2019'
+        - 'win2022'
+        - 'rhel'
+        - 'rhel-podman'
+        
+
 
 env: 
   # azure packer secrets
