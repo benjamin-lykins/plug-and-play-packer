@@ -16,7 +16,7 @@ on:
         - 'vsphere'
       image:
         type: choice
-        description: 'Platform'
+        description: 'OS'
         options:
         - 'win2016'
         - 'win2019'
