@@ -54,6 +54,6 @@ jobs:
       - name: Terraform Apply
         id: apply
         run: |
-         terraform apply\
+         terraform apply \
          -var bucket_name="windows-2019-base"
         working-directory: terraform/azure-local
