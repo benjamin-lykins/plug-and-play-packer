@@ -3,7 +3,7 @@ terraform {
     organization = "lykins-demo-org"
 
     workspaces {
-      name = "packer-azure"
+      name = "packer-azure-local"
     }
   }
 }
