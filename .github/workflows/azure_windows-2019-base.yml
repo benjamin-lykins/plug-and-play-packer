@@ -122,9 +122,13 @@ jobs:
         run: terraform validate -no-color
         working-directory: terraform/azure1
 
-      - name: Terraform Apply
-        id: apply
+
+      - name: Terraform plan
+        id: plan
         run: |
-         terraform apply -auto-approve \
-         -var bucket_name="windows-2019-base"
-        working-directory: terraform/azure1
+          pwd
+          terraform plan \
+          -var bucket_name="win2019-base" \
+          -var vsphere_user="SA-TFC-ADMIN-NONPROD" \
+          -var vsphere_password="${{ secrets.VSPHERE_PASSWORD }}"
+        working-directory: terraform/vsphere

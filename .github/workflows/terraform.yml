@@ -7,6 +7,13 @@ on:
     paths:
       - "packer/**/*windows*"
   workflow_dispatch:
+    inputs:
+      platform:
+        type: choice
+        description: 'Platform to deploy'
+        options:
+        - 'azure'
+        - 'vsphere'
 
 env: 
   # azure packer secrets
@@ -57,3 +64,12 @@ jobs:
          terraform apply \
          -var bucket_name="windows-2019-base"
         working-directory: terraform/azure-local
+
+      - name: Terraform test
+        id: test
+        run: |
+          terraform apply -auto-approve \
+          -var bucket_name="win2019-base" \
+          -var vsphere_user="SA-TFC-ADMIN-NONPROD" \
+          -var vsphere_password=${{ secrets.VSPHERE_PASSWORD }}
+        working-directory: terraform/vsphere
