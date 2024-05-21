@@ -41,6 +41,7 @@ jobs:
  terraform-azure-1:
     runs-on: ubuntu-latest
     name: Run Terraform Azure
+    if : github.event_name == 'azure'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
