@@ -38,10 +38,10 @@ env:
   TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
 jobs:
- terraform-azure-1:
+ terraform-azure:
     runs-on: ubuntu-latest
     name: Run Terraform Azure
-    if : github.event_name == 'azure'
+    if : github.event.inputs.platform == 'azure'
     steps:
       - name: Checkout
         uses: actions/checkout@v3
@@ -65,23 +65,9 @@ jobs:
         run: terraform validate -no-color
         working-directory: terraform/azure-local
 
-      - name: PWD
-        id: pwd
-        run: pwd
-        working-directory: terraform/azure-local
-
       - name: Terraform Apply
         id: apply
         run: |
          terraform apply \
          -var bucket_name="windows-2019-base"
         working-directory: terraform/azure-local
-
-      - name: Terraform test
-        id: test
-        run: |
-          terraform apply -auto-approve \
-          -var bucket_name="win2019-base" \
-          -var vsphere_user="SA-TFC-ADMIN-NONPROD" \
-          -var vsphere_password=${{ secrets.VSPHERE_PASSWORD }}
-        working-directory: terraform/vsphere
