@@ -8,20 +8,20 @@ source "azure-arm" "windows" {
 
 
   //  Managed images and resource group - exported after build. Resource Group needs to exist prior to build.
-  managed_image_name                = "windows-${var.windows_version}-${local.time}-secure"
-  managed_image_resource_group_name = "demo-packer-rg"
+  // managed_image_name                = "windows-${var.windows_version}-${local.time}-secure"
+  // managed_image_resource_group_name = "demo-packer-rg"
 
-  // secure_boot_enabled = true
-  // vtpm_enabled = true
-  // security_type = "TrustedLaunch"
+  secure_boot_enabled = true
+  vtpm_enabled = true
+  security_type = "TrustedLaunch"
 
-  // shared_image_gallery_destination {
-  //   subscription   = var.azure_subscription_id
-  //   resource_group = "ben-packer-new-rg"
-  //   gallery_name   = "ben_packer_gallery"
-  //   image_name     = "windows-${var.windows_version}"
-  //   image_version  = "1.0.${local.patch_version}02"
-  // }
+  shared_image_gallery_destination {
+    subscription   = var.azure_subscription_id
+    resource_group = "demo-packer-rg"
+    gallery_name   = "acg"
+    image_name     = "windows-${var.windows_version}"
+    image_version  = "1.0.${local.patch_version}"
+  }
 
   vm_size = "Standard_DS1_v2"
 
