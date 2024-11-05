@@ -13,7 +13,7 @@ source "azure-arm" "windows" {
   vm_size = "Standard_DS1_v2"
 
   // While build the image, this resource group is utilized.
-  build_resource_group_name = "demo-packer-builds-rg"
+  location = "East US"
 
   // These are passed in the pipeline as GitHub Secrets.
 
