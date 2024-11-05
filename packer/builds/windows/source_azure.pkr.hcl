@@ -15,6 +15,7 @@ source "azure-arm" "windows" {
   // While build the image, this resource group is utilized.
   location = "East US"
 
+
   // These are passed in the pipeline as GitHub Secrets.
 
   subscription_id = var.azure_subscription_id
