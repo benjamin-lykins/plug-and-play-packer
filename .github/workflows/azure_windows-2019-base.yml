@@ -1,11 +1,6 @@
 name: windows-2019-base
 
 on:
-  push:
-    branches:
-      - main
-    paths:
-      - "packer/**/*windows*"
   workflow_dispatch:
 
 env: 
@@ -14,10 +9,6 @@ env:
   PKR_VAR_azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   PKR_VAR_azure_client_id : ${{ secrets.AZURE_CLIENT_ID  }}
   PKR_VAR_azure_client_secret: ${{ secrets.AZURE_CLIENT_SECRET }}
-  PKR_VAR_mondoo_registration: ${{ secrets.MONDOO_REGISTRATION }}
-
-  # terraform secrets
-  TF_TOKEN_app_terraform_io: ${{ secrets.TF_API_TOKEN }}
 
 jobs:
  packer:
@@ -61,74 +52,3 @@ jobs:
           packer build \
           -force \
           ./packer/builds/azure/2019/.
-
- terraform-azure-1:
-    needs: packer
-    runs-on: ubuntu-latest
-    name: Run Terraform Azure (1)
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-
-      - name: Setup `terraform`
-        uses: hashicorp/setup-terraform@main
-        
-      - name: Terraform fmt
-        id: fmt
-        run: terraform fmt -check
-        working-directory: terraform/azure
-        continue-on-error: true
-
-      - name: Terraform Init
-        id: init
-        run: terraform init
-        working-directory: terraform/azure
-
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
-        working-directory: terraform/azure
-
-      - name: Terraform Apply
-        id: apply
-        run: |
-         terraform apply -auto-approve \
-         -var bucket_name="windows-2019-base"
-        working-directory: terraform/azure
-#  terraform-azure-2:
-#     needs: packer
-#     runs-on: ubuntu-latest
-#     name: Run Terraform Azure (2)
-#     steps:
-#       - name: Checkout
-#         uses: actions/checkout@v3
-
-#       - name: Setup `terraform`
-#         uses: hashicorp/setup-terraform@main
-        
-#       - name: Terraform fmt
-#         id: fmt
-#         run: terraform fmt -check
-#         working-directory: terraform/azure1
-#         continue-on-error: true
-
-#       - name: Terraform Init
-#         id: init
-#         run: terraform init
-#         working-directory: terraform/azure1
-
-#       - name: Terraform Validate
-#         id: validate
-#         run: terraform validate -no-color
-#         working-directory: terraform/azure1
-
-
-#       - name: Terraform plan
-#         id: plan
-#         run: |
-#           pwd
-#           terraform plan \
-#           -var bucket_name="win2019-base" \
-#           -var vsphere_user="SA-TFC-ADMIN-NONPROD" \
-#           -var vsphere_password="${{ secrets.VSPHERE_PASSWORD }}"
-#         working-directory: terraform/vsphere
