@@ -7,21 +7,10 @@ source "azure-arm" "windows" {
   os_type         = "Windows"
 
 
-  // //  Managed images and resource group - exported after build. Resource Group needs to exist prior to build.
-  // managed_image_name                = "windows-${var.windows_version}-${local.time}-secure"
-  // managed_image_resource_group_name = "demo-packer-rg"
+  //  Managed images and resource group - exported after build. Resource Group needs to exist prior to build.
+  managed_image_name                = "windows-${var.windows_version}-${local.time}"
+  managed_image_resource_group_name = "demo-packer-rg"
 
-  // secure_boot_enabled = true
-  // // vtpm_enabled = true
-  // security_type = "TrustedLaunch"
-
-  shared_image_gallery_destination {
-    subscription   = var.azure_subscription_id
-    resource_group = "demo-packer-rg"
-    gallery_name   = "acg"
-    image_name     = "windows-${var.windows_version}"
-    image_version  = "1.0.${local.patch_version}"
-  }
 
   vm_size = "Standard_DS1_v2"
 
@@ -64,19 +53,18 @@ build {
     ]
   }
 
-  hcp_packer_registry {
-    bucket_name = "windows-${var.windows_version}-base"
-    description = <<EOT
-      This is a base image for Windows Server ${var.windows_version} Datacenter.
-    EOT
-    bucket_labels = {
-      "owner"   = "ahs"
-      "os"      = "windows",
-      "version" = "${var.windows_version}",
-    }
-    build_labels = {
-      "build-time"   = timestamp()
-      "build-source" = basename(path.cwd)
-    }
-  }
+  # hcp_packer_registry {
+  #   bucket_name = "windows-${var.windows_version}-base"
+  #   description = <<EOT
+  #     This is a base image for Windows Server ${var.windows_version} Datacenter.
+  #   EOT
+  #   bucket_labels = {
+  #     "os"      = "windows",
+  #     "version" = "${var.windows_version}",
+  #   }
+  #   build_labels = {
+  #     "build-time"   = timestamp()
+  #     "build-source" = basename(path.cwd)
+  #   }
+  # }
 }

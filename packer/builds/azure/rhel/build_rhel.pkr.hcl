@@ -29,15 +29,6 @@ source "azure-arm" "rhel" {
   vm_size = "Standard_DS1_v2"
   os_type = "linux"
 
-  // Create a managed image and share it to a gallery
-  shared_image_gallery_destination {
-    subscription   = "${var.azure_subscription_id}"
-    gallery_name   = "packer_acg"
-    image_name     = "rhel-9-${var.rhel_minor_version}"
-    image_version  = "1.0.${local.minor_version}"
-    resource_group = "packer-rg"
-  }
-
   // These are passed in the pipeline.
 
   subscription_id = var.azure_subscription_id
@@ -49,22 +40,22 @@ source "azure-arm" "rhel" {
 build {
   sources = ["source.azure-arm.rhel"]
 
-  hcp_packer_registry {
-    bucket_name = "rhel-9-${var.rhel_minor_version}-base"
-    description = <<EOT
-    You can put any arbitrary text here. This is just an example. I will say, 'hi gabe and class.'
-    EOT
-    bucket_labels = {
-      "owner"         = "platform-team"
-      "os"            = "rhel",
-      "major_version" = "9",
-      "minor_version" = "${var.rhel_minor_version}"
-    }
-    build_labels = {
-      "build-time"   = timestamp()
-      "build-source" = basename(path.cwd)
-    }
-  }
+  # hcp_packer_registry {
+  #   bucket_name = "rhel-9-${var.rhel_minor_version}-base"
+  #   description = <<EOT
+  #   You can put any arbitrary text here. This is just an example. I will say, 'hi gabe and class.'
+  #   EOT
+  #   bucket_labels = {
+  #     "owner"         = "platform-team"
+  #     "os"            = "rhel",
+  #     "major_version" = "9",
+  #     "minor_version" = "${var.rhel_minor_version}"
+  #   }
+  #   build_labels = {
+  #     "build-time"   = timestamp()
+  #     "build-source" = basename(path.cwd)
+  #   }
+  # }
 
   provisioner "cnspec" {
     on_failure      = "continue"
