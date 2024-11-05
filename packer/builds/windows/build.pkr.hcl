@@ -1,7 +1,7 @@
 
 
 build {
-  sources = ["source.azure-arm.windows"]
+  sources = ["source.azure-arm.windows", "source.amazon-ebs.windows"]
 
 
   provisioner "powershell" {
@@ -17,6 +17,18 @@ build {
 
       "& $env:SystemRoot\\System32\\Sysprep\\Sysprep.exe /oobe /generalize /quiet /quit /mode:vm",
       "while($true) { $imageState = Get-ItemProperty HKLM:\\SOFTWARE\\Microsoft\\Windows\\CurrentVersion\\Setup\\State | Select ImageState; if($imageState.ImageState -ne 'IMAGE_STATE_GENERALIZE_RESEAL_TO_OOBE') { Write-Output $imageState.ImageState; Start-Sleep -s 10  } else { break } }"
+    ]
+  }
+
+  #sysprep https://www.packer.io/docs/builders/amazon/ebs#build-template-data / https://thepracticalsysadmin.com/create-windows-server-2019-amis-using-packer/
+  provisioner "powershell" {
+    only = ["amazon-ebs.windows"]
+    # Reinitialize the server to generate a random password on first boot
+    inline = [
+      "Write-Output 'Running InitializeInstance.ps1'",
+      "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\InitializeInstance.ps1 -Schedule",
+      "Write-Output 'Running SysprepInstance.ps1'",
+      "C:\\ProgramData\\Amazon\\EC2-Windows\\Launch\\Scripts\\SysprepInstance.ps1 -NoShutdown"
     ]
   }
 
