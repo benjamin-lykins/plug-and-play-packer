@@ -1,10 +1,9 @@
-name: windows-2019-base
+name: windows
 
 on:
   workflow_dispatch:
 
 env: 
-  # azure packer secrets
   PKR_VAR_azure_tenant_id: ${{ secrets.AZURE_TENANT_ID }}
   PKR_VAR_azure_subscription_id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
   PKR_VAR_azure_client_id : ${{ secrets.AZURE_CLIENT_ID  }}

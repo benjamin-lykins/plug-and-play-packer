@@ -1,4 +1,4 @@
-name: rhel9-base
+name: rhel
 
 on:
   workflow_dispatch:
