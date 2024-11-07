@@ -46,19 +46,40 @@ variable "aws_deprecate_at" {
 variable "aws_access_key" {
   type        = string
   description = "The AWS access key, if an env variable exists it will use it."
-  default    = env("AWS_ACCESS_KEY_ID")
+  default     = env("AWS_ACCESS_KEY_ID")
+
+  validation {
+    condition     = length(var.aws_access_key) > 0
+    error_message = <<EOF
+The aws_access_key var is not set: make sure to at least set the AWS_ACCESS_KEY_ID env var.
+EOF
+  }
 }
 
 variable "aws_secret_key" {
   type        = string
   description = "The AWS secret key, if an env variable exists it will use it."
-  default    = env("AWS_SECRET_ACCESS_KEY")
+  default     = env("AWS_SECRET_ACCESS_KEY")
+  validation {
+    condition     = length(var.aws_secret_key) > 0
+    error_message = <<EOF
+The aws_secret_key var is not set: make sure to at least set the AWS_SECRET_ACCESS_KEY env var.
+EOF
   }
+}
 
 variable "aws_build_region" {
-    type        = string 
-    description = "The region to build the AMI in."
-    default     = env("AWS_DEFAULT_REGION")
+  type        = string
+  description = "The region to build the AMI in."
+  default     = env("AWS_DEFAULT_REGION")
+  validation {
+    condition     = length(var.aws_build_region) > 0
+    error_message = <<EOF
+The aws_build_region var is not set: make sure to at least set the AWS_DEFAULT_REGION env var.
+To fix this you could also set the aws_region variable from the arguments, for example:
+$ packer build -var=aws_build_region=us-east-1...
+EOF
+  }
 }
 
 # Run Configuration
@@ -95,7 +116,7 @@ variable "aws_associate_public_ip_address" {
 variable "aws_user_data_file" {
   type        = string
   description = "The user data file to use for the instance."
-  default = null
+  default     = null
 }
 
 variable "aws_vpc_id" {
@@ -135,4 +156,38 @@ variable "aws_ssh_username" {
   type        = string
   description = "The SSH username to use for the instance."
   default     = "ec2-user"
+}
+
+variable "aws_ssh_password" {
+  type        = string
+  description = "The SSH password to use for the instance."
+  default     = null
+}
+
+variable "aws_ssh_timeout" {
+  type        = string
+  description = "The SSH timeout to use for the instance. Default is 5m."
+  default     = null
+}
+
+## WinRM Configuration
+## Basing on this config:
+## https://developer.hashicorp.com/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#connecting-to-windows-instances-using-winrm
+
+variable "aws_winrm_username" {
+  type        = string
+  description = "The WinRM username to use for the instance. For AWS images, the default is Administrator."
+  default     = "Administrator"
+}
+
+variable "aws_winrm_insecure" {
+  type        = bool
+  description = "The WinRM insecure flag to use for the instance."
+  default     = true
+}
+
+variable "aws_winrm_use_ssl" {
+  type        = bool
+  description = "The WinRM use SSL flag to use for the instance."
+  default     = true
 }

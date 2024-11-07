@@ -1,18 +1,29 @@
 variable "os" {
-  type    = string
+  type        = string
   description = "The operating system."
-  default = "ubuntu"
+  default     = "ubuntu"
 }
 
 variable "os_version" {
-  type    = string
+  type        = string
   description = "The operating system version."
-  default = "20.04"
+  default     = "20.04"
 }
 
 variable "role" {
-  type    = string
+  type        = string
   description = "The role of the image."
-  default = "base"
+  default     = "base"
 }
 
+variable "cloud_override" {
+  type        = string
+  description = "Overrides for cloud-specific variables."
+  default     = "aws"
+}
+
+variable "script" {
+  type        = string
+  description = "The script to run."
+  default     = "packer/shared/scripts/ubuntu/base.sh"
+}

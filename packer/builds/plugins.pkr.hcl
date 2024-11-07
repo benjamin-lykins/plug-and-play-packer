@@ -8,6 +8,9 @@ packer {
       source  = "github.com/hashicorp/amazon"
       version = "~> 1"
     }
-
+    googlecompute = {
+      source  = "github.com/hashicorp/googlecompute"
+      version = "~> 1"
+    }
   }
 }
