@@ -5,7 +5,7 @@ locals {
     azure = ["source.azure-arm.this"]
     gcp   = ["source.googlecompute.this"]
   }
-  sources = lookup(local.sources, var.cloud, ["source.amazon-ebs.this", "source.azure-arm.this", "source.googlecompute.this"])
+  sources = lookup(local.clouds, var.cloud_override, ["source.amazon-ebs.this", "source.azure-arm.this", "source.googlecompute.this"])
 }
 
 build {

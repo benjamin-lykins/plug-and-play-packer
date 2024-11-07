@@ -1,5 +1,5 @@
 locals {
-  ami_name = "${var.os}-${var.version}-${var.role}-${local.time}"
+  ami_name = "${var.os}-${var.os_version}-${var.role}-${local.time}"
 }
 
 source "amazon-ebs" "this" {
@@ -14,28 +14,37 @@ source "amazon-ebs" "this" {
   # AMI Configuration
   ## Only most common options I have used in the past.
   ## https://developer.hashicorp.com/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#ami-configuration
-  ami_name              = local.ami_name                 #${var.os}-${var.version}-${var.role}-${local.time}
-  ami_regions           = var.aws_ami_region_replication #null
-  tags                  = var.aws_ami_tags
-  force_deregister      = var.aws_force_deregister
-  force_delete_snapshot = var.aws_force_delete_snapshot
-  deprecate_at          = timeadd(timestamp(), var.aws_deprecate_at)
+  ami_name    = local.ami_name      #${var.os}-${var.version}-${var.role}-${local.time}
+  ami_regions = var.aws_ami_regions #null
+  tags = merge(var.aws_ami_tags,
+    {
+      "name"           = local.ami_name
+      "role"           = var.role
+      "os"             = var.os
+      "os_version"     = var.os_version
+      "build_date"     = timestamp()
+      "packer_version" = "${packer.version}"
+    }
+  )
+  force_deregister      = var.aws_force_deregister #null
+  force_delete_snapshot = var.aws_force_deregister ? var.aws_force_delete_snapshot : null #false
+  deprecate_at          = timeadd(timestamp(), var.aws_deprecate_at) #null
 
   # Access Configuration
   ## Only using simpler approach with access_key and secret_key.
   ## There are a lot of other ways to configure access to AWS, use the approach you are most comfortable with, or able to. 
   ## https://developer.hashicorp.com/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#access-configuration
 
-  access_key = var.aws_access_key
-  secret_key = var.aws_secret_key
-  region     = var.aws_build_region
+  access_key = var.aws_access_key #env("AWS_ACCESS_KEY_ID")
+  secret_key = var.aws_secret_key #env("AWS_SECRET_ACCESS_KEY")
+  region     = var.aws_build_region #env("AWS_DEFAULT_REGION")
 
   # Run Configuration
   ## https://developer.hashicorp.com/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#run-configuration
-  instance_type = var.instance_type
+  instance_type = var.aws_instance_type #t2.micro
 
   source_ami_filter {
-    filters     = var.aws_source_ami_filters
+    filters     = var.aws_source_ami_filters 
     most_recent = var.aws_source_ami_most_recent
     owners      = var.aws_source_ami_owners
   }
@@ -44,11 +53,13 @@ source "amazon-ebs" "this" {
   ## If you want your instance to be assigned a public IP address, you must set this value to true.
   ## If building in a private subnet, then set this to false. 
   associate_public_ip_address = var.aws_associate_public_ip_address #true
-  user_data_file = var.aws_user_data_file
-  vpc_id    = var.aws_vpc_id
-  subnet_id = var.aws_subnet_id
+  user_data_file              = var.aws_user_data_file #null
+  vpc_id                      = var.aws_vpc_id #Needs to be set
+  subnet_id                   = var.aws_subnet_id #Needs to be set
 
   # Communicator Configuration
+  ## With Linux SSH would be the most common communicator.
+  ## With Windows WinRM would be the most common communicator.
   ## https://developer.hashicorp.com/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#communicator-configuration
   communicator = var.aws_communicator #ssh
 
