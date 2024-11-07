@@ -1,5 +1,5 @@
 
-# source "azure-arm" "rhel" {
+# source "azure-arm" "this" {
 
 #   // Grab the latest version of the Windows Server 2019 Datacenter
 #   image_publisher = "redhat"

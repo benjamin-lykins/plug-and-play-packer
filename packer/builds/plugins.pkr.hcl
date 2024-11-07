@@ -4,9 +4,10 @@ packer {
       source  = "github.com/hashicorp/azure"
       version = "~> 2"
     }
-    cnspec = {
-      source  = "github.com/mondoohq/cnspec"
-      version = ">= 10.0.0"
+    amazon = {
+      source  = "github.com/hashicorp/amazon"
+      version = "~> 1"
     }
+
   }
 }

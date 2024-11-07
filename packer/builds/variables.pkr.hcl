@@ -4,6 +4,6 @@ variable "ubuntu_version" {
 }
 
 variable "role" {
-  type = string
+  type    = string
   default = "base"
 }
