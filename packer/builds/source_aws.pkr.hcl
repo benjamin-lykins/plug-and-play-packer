@@ -3,7 +3,7 @@ locals {
 }
 
 source "amazon-ebs" "this" {
-  # Full Documentation: 
+  # Full Documentation
   ## https://developer.hashicorp.com/packer/integrations/hashicorp/amazon/latest/components/builder/ebs
 
   # EBS Builder Configuration
@@ -43,16 +43,16 @@ source "amazon-ebs" "this" {
   ## https://developer.hashicorp.com/packer/integrations/hashicorp/amazon/latest/components/builder/ebs#run-configuration
   instance_type = var.aws_instance_type #t2.micro
 
-dynamic "source_ami_filter" {
+  dynamic "source_ami_filter" {
     for_each = !var.hcp_packer_registry_pull ? [1] : []
     content {
-    filters     = var.aws_source_ami_filters
-    most_recent = var.aws_source_ami_most_recent
-    owners      = var.aws_source_ami_owners
+      filters     = var.aws_source_ami_filters
+      most_recent = var.aws_source_ami_most_recent
+      owners      = var.aws_source_ami_owners
+    }
   }
-}
 
-source_ami_id = var.hcp_packer_registry_pull ? 
+  source_ami_id = var.hcp_packer_registry_pull ? data.hcp-packer-artifact.this["source.amazon-ebs.this"].external_identifier : null
 
   ## If using a non-default VPC, public IP addresses are not provided by default. 
   ## If you want your instance to be assigned a public IP address, you must set this value to true.

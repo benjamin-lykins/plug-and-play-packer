@@ -36,7 +36,7 @@ variable "build_labels" {
 variable "hcp_packer_registry_pull" {
   type        = bool
   description = "Set to true to pull the metadata from the registry."
-  default     = false
+  default     = true
 }
 
 variable "hcp_packer_bucket_name_pull" {

@@ -20,7 +20,7 @@
 
  - AWS
  - Azure
- - GCP
+ - Google Compute Engine
 
  ## Plug and Play
 
