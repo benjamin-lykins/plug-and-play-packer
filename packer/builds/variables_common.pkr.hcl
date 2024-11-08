@@ -4,6 +4,12 @@ variable "os" {
   default     = "ubuntu"
 }
 
+variable "os_type" {
+  type        = string
+  description = "The operating system version."
+  default     = "linux"
+}
+
 variable "os_version" {
   type        = string
   description = "The operating system version."
