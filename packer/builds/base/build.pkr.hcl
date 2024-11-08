@@ -36,7 +36,6 @@ build {
   ## https://developer.hashicorp.com/packer/integrations/hashicorp/azure/latest/components/builder/arm#deprovision
   provisioner "shell" {
     only            = var.os_type != "linux" ? ["azure-arm.this"] : [""]
-    execute_command = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"
     inline = [
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ]
