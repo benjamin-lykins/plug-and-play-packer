@@ -9,25 +9,25 @@ variable "hcp_packer_registry_push" {
 
 variable "hcp_packer_bucket_name_push" {
   type        = string
-  description = "The name of the bucket to store the metadata."
+  description = "The name of the bucket to store the metadata. Only necessary if hcp_packer_registry_push is true."
   default     = ""
 }
 
 variable "bucket_description" {
   type        = string
-  description = "The name of the bucket to store the metadata."
+  description = "The name of the bucket to store the metadata. Only necessary if hcp_packer_registry_push is true."
   default     = ""
 }
 
 variable "bucket_labels" {
   type        = map(string)
-  description = "Labels to apply to the bucket."
+  description = "Labels to apply to the bucket. Only necessary if hcp_packer_registry_push is true."
   default     = {}
 }
 
 variable "build_labels" {
   type        = map(string)
-  description = "Labels to apply to the bucket."
+  description = "Labels to apply to the bucket. Only necessary if hcp_packer_registry_push is true."
   default     = {}
 }
 
@@ -41,8 +41,13 @@ variable "hcp_packer_registry_pull" {
 
 variable "hcp_packer_bucket_name_pull" {
   type        = string
-  description = "The name of the bucket to store the metadata."
+  description = "The name of the bucket to retrieving metadata. Only necessary if hcp_packer_registry_pull is true."
   default     = ""
 }
 
+variable "hcp_packer_channel_name_pull" {
+  type        = string
+  description = "The name of the channel to retrieve metadata. Only necessary if hcp_packer_registry_pull is true."
+  default     = ""
+}
 

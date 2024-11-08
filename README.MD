@@ -24,11 +24,13 @@
 
  ## Plug and Play
 
- Looking to run this off of one Packer template. 
+Looking to have only two templates. 
 
- One packer template which will build Linux and Windows images. 
+One for your base images and one for your app images. 
 
- One Packer template which will build in a specific cloud platform or all the major platforms. 
+Those templates will run on one or many cloud platforms. 
+
+Those tempaltes will run windows or linux. 
 
  ## HCP Packer Integration
 

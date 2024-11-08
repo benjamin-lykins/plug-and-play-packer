@@ -13,22 +13,22 @@ locals {
 }
 
 # data "hcp-packer-artifact" "aws" {
-#   bucket_name  = var.hcp_packer_bucket_name_pull_aws
-#   channel_name = var.hcp_packer_channel_name_pull_aws
+#   bucket_name  = var.hcp_packer_bucket_name_pull
+#   channel_name = var.hcp_packer_channel_name_pull
 #   platform     = "aws"
 #   region       = lookup(local.region, each.value, "us-east-1")
 # }
 
 # data "hcp-packer-artifact" "azure" {
-#   bucket_name  = var.hcp_packer_bucket_name_pull_azure
-#   channel_name = var.hcp_packer_channel_name_pull_azure
+#   bucket_name  = var.hcp_packer_bucket_name_pull
+#   channel_name = var.hcp_packer_channel_name_pull
 #   platform     = "azure"
 #   region       = lookup(local.region, "azure", "eastus")
 # }
 
 # data "hcp-packer-artifact" "gce" {
-#   bucket_name  = var.hcp_packer_bucket_name_pull_gce
-#   channel_name = var.hcp_packer_channel_name_pull_gce
+#   bucket_name  = var.hcp_packer_bucket_name_pull
+#   channel_name = var.hcp_packer_channel_name_pull
 #   platform     = "gce"
 #   region       = lookup(local.region, "gce", "us-east1")
 # }
