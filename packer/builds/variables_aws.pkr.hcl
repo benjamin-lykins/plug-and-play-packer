@@ -92,18 +92,19 @@ variable "aws_instance_type" {
 
 variable "aws_source_ami_filters" {
   type        = map(string)
-  description = "The filters to use when searching for the source AMI."
+  description = "The filters to use when searching for the source AMI. If using HCP Packer, this will be ignored."
+  default     = {}
 }
 
 variable "aws_source_ami_most_recent" {
   type        = bool
-  description = "The most recent source AMI."
+  description = "The most recent source AMI. If using HCP Packer, this will be ignored."
   default     = true
 }
 
 variable "aws_source_ami_owners" {
   type        = list(string)
-  description = "The owners of the source AMI."
+  description = "The owners of the source AMI. If using HCP Packer, this will be ignored."
   default     = ["amazon"]
 }
 

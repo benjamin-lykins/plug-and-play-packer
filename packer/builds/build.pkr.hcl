@@ -16,7 +16,6 @@ build {
     exit_codes        = var.build_shell_script_exit_codes
     execute_command   = var.build_shell_script_execute_command
     expect_disconnect = var.build_shell_script_expect_disconnect
-
   }
 
   # Same thing, no clue why this works, but it does.  I'm going to leave it alone for now.

@@ -25,7 +25,7 @@ variable "role" {
 variable "cloud_override" {
   type        = list(string)
   description = "Overrides for cloud-specific variables."
-  default     = ["source.amazon-ebs.this", "source.azure-arm.this", "source.googlecompute.this"]
+  default     = ["source.amazon-ebs.this"] # Set to all when ready. 
 }
 
 # Shell script variables
@@ -39,25 +39,25 @@ variable "build_shell_scripts" {
 variable "build_shell_script_environment_vars" {
   type        = list(string)
   description = "Environment variables for build scripts."
-  default     = []
+  default     = null
 }
 
 variable "build_shell_script_exit_codes" {
   type        = list(number)
   description = "List of exit codes that are considered successful."
-  default     = [0]
+  default     = null
 }
 
 variable "build_shell_script_execute_command" {
   type        = string
   description = "The command to execute the shell script."
-  default     = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"
+  default     = null
 }
 
 variable "build_shell_script_expect_disconnect" {
   type        = bool
   description = "Expect the connection to disconnect after the script is run."
-  default     = false
+  default     = null
 }
 
 # Powershell script variables
@@ -71,25 +71,25 @@ variable "build_powershell_scripts" {
 variable "build_powershell_script_environment_vars" {
   type        = list(string)
   description = "Environment variables for build scripts."
-  default     = []
+  default     = null
 }
 
 variable "build_powershell_script_use_pwsh" {
   type        = bool
   description = "Environment variables for build scripts."
-  default     = false
+  default     = null
 }
 
 variable "build_powershell_script_exit_codes" {
   type        = list(number)
   description = "List of exit codes that are considered successful."
-  default     = [0]
+  default     = null
 }
 
 variable "build_powershell_script_execute_command" {
   type        = string
   description = "The command to execute the powershell script."
-  default     = "powershell -executionpolicy bypass \"& { if (Test-Path variable:global:ProgressPreference){$ProgressPreference='SilentlyContinue'};. {{.Vars}}; &'{{.Path}}'; exit $LastExitCode }\""
+  default     = null
 }
 
 variable "build_powershell_script_elevated_user" {
@@ -101,5 +101,5 @@ variable "build_powershell_script_elevated_user" {
 variable "build_powershell_script_execution_policy" {
   type        = string
   description = "The command to execute the powershell script."
-  default     = "bypass"
+  default     = null
 }
