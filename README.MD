@@ -6,9 +6,9 @@
 
  # Why
 
- I love Packer. Probably, too much. I also love Terraform. When it comes to anything from HashiCorp, I lean to the infrastructure side of things. 
+ I love Packer. Probably, too much. I also love Terraform. When it comes to anything from HashiCorp, I lean to the infrastructure side of things. For this I am trying to replicate what Terraform modules do which make provisioning resources and architecture with Terraform much simpler. 
  
- What I am tyring to do here is provide a resource to the community to more quickly adopt Packer and HCP Packer into their workloads.
+ I am also trying to share this with the community to more quickly adopt Packer and HCP Packer into their workloads.
 
  # Features
 
