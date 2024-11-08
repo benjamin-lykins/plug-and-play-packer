@@ -27,7 +27,7 @@ source "amazon-ebs" "this" {
     }
   )
   force_deregister      = var.aws_force_deregister                                                         #null
-  force_delete_snapshot = var.aws_force_deregister != null ? var.aws_force_delete_snapshot : null                  #false
+  force_delete_snapshot = var.aws_force_deregister != null ? var.aws_force_delete_snapshot : null          #false
   deprecate_at          = var.aws_deprecate_at != null ? timeadd(timestamp(), var.aws_deprecate_at) : null #null
 
   # Access Configuration

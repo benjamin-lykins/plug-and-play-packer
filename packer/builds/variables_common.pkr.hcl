@@ -23,13 +23,83 @@ variable "role" {
 }
 
 variable "cloud_override" {
-  type        = string
+  type        = list(string)
   description = "Overrides for cloud-specific variables."
-  default     = "aws"
+  default     = ["source.amazon-ebs.this", "source.azure-arm.this", "source.googlecompute.this"]
 }
 
-variable "script" {
+# Shell script variables
+
+variable "build_shell_scripts" {
+  type        = list(string)
+  description = "List of build scripts to run."
+  default     = []
+}
+
+variable "build_shell_script_environment_vars" {
+  type        = list(string)
+  description = "Environment variables for build scripts."
+  default     = []
+}
+
+variable "build_shell_script_exit_codes" {
+  type        = list(number)
+  description = "List of exit codes that are considered successful."
+  default     = [0]
+}
+
+variable "build_shell_script_execute_command" {
   type        = string
-  description = "The script to run."
-  default     = "packer/shared/scripts/ubuntu/base.sh"
+  description = "The command to execute the shell script."
+  default     = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"
+}
+
+variable "build_shell_script_expect_disconnect" {
+  type        = bool
+  description = "Expect the connection to disconnect after the script is run."
+  default     = false
+}
+
+# Powershell script variables
+
+variable "build_powershell_scripts" {
+  type        = list(string)
+  description = "List of build scripts to run."
+  default     = []
+}
+
+variable "build_powershell_script_environment_vars" {
+  type        = list(string)
+  description = "Environment variables for build scripts."
+  default     = []
+}
+
+variable "build_powershell_script_use_pwsh" {
+  type        = bool
+  description = "Environment variables for build scripts."
+  default     = false
+}
+
+variable "build_powershell_script_exit_codes" {
+  type        = list(number)
+  description = "List of exit codes that are considered successful."
+  default     = [0]
+}
+
+variable "build_powershell_script_execute_command" {
+  type        = string
+  description = "The command to execute the powershell script."
+  default     = "powershell -executionpolicy bypass \"& { if (Test-Path variable:global:ProgressPreference){$ProgressPreference='SilentlyContinue'};. {{.Vars}}; &'{{.Path}}'; exit $LastExitCode }\""
+}
+
+variable "build_powershell_script_elevated_user" {
+  type        = string
+  description = "The command to execute the powershell script."
+  default     = "Administrator"
+}
+
+variable "build_powershell_script_execution_policy" {
+  type        = string
+  description = "The command to execute the powershell script."
+  default     = "bypass"
 }
