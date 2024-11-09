@@ -1,4 +1,11 @@
-# 
+# Authenticated with HCP
+## Following environment variables need to be set
+## export HCP_CLIENT_ID=
+## export HCP_CLIENT_SECRET=
+## export HCP_PROJECT_ID=
+## Optional, if a build was incompleted, you can set export HCP_PACKER_BUILD_FINGERPRINT= 
+## Full documentation
+## https://developer.hashicorp.com/packer/docs/hcp
 
 ## Following variables are when building the image and pushing to the HCP Packer Registry. 
 variable "hcp_packer_registry_push" {
@@ -36,7 +43,7 @@ variable "build_labels" {
 variable "hcp_packer_registry_pull" {
   type        = bool
   description = "Set to true to pull the metadata from the registry."
-  default     = true
+  default     = false
 }
 
 variable "hcp_packer_bucket_name_pull" {

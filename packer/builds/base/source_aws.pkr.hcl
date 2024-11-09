@@ -44,7 +44,7 @@ source "amazon-ebs" "this" {
   instance_type = var.aws_instance_type #t2.micro
 
   dynamic "source_ami_filter" {
-    for_each = !var.hcp_packer_registry_pull ? [1] : []
+    for_each = var.aws_source_ami_filters != {} ? [1] : []
     content {
       filters     = var.aws_source_ami_filters
       most_recent = var.aws_source_ami_most_recent
@@ -52,7 +52,7 @@ source "amazon-ebs" "this" {
     }
   }
 
-  source_ami_id = var.hcp_packer_registry_pull ? data.hcp-packer-artifact.this["source.amazon-ebs.this"].external_identifier : null
+  source_ami = var.aws_source_ami_filters == {} ? var.aws_source_ami_id : null
 
   ## If using a non-default VPC, public IP addresses are not provided by default. 
   ## If you want your instance to be assigned a public IP address, you must set this value to true.

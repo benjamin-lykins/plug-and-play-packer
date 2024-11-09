@@ -1,8 +1,5 @@
 #!/bin/bash -ex
-
-curl --version
-wget --version
-git --version
+export DEBIAN_FRONTEND=noninteractive
 
 # Uninstall old versions:
 echo "Uninstalling old versions of Docker..."
@@ -18,9 +15,9 @@ sudo chmod a+r /etc/apt/keyrings/docker.asc
 
 # Add the repository to Apt sources:
 echo \
-    "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
+  "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu \
   $(. /etc/os-release && echo "$VERSION_CODENAME") stable" |
-    sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
+  sudo tee /etc/apt/sources.list.d/docker.list >/dev/null
 sudo apt-get update
 
 # Install Docker:

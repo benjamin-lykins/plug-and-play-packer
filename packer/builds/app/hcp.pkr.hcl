@@ -5,11 +5,11 @@
 # So if adding any cloud platform, make sure to uncomment the block. 
 
 locals {
-    region = {
-        "aws" = "us-east-1"
-        "azure"  = "eastus"
-        "gce" = "us-central1"
-    }
+  region = {
+    "aws"   = "us-east-1"
+    "azure" = "eastus"
+    "gce"   = "us-central1"
+  }
 }
 
 # data "hcp-packer-artifact" "aws" {

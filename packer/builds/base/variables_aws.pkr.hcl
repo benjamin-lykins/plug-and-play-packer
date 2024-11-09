@@ -92,20 +92,26 @@ variable "aws_instance_type" {
 
 variable "aws_source_ami_filters" {
   type        = map(string)
-  description = "The filters to use when searching for the source AMI. If using HCP Packer, this will be ignored."
+  description = "The filters to use when searching for the source AMI."
   default     = {}
 }
 
 variable "aws_source_ami_most_recent" {
   type        = bool
-  description = "The most recent source AMI. If using HCP Packer, this will be ignored."
+  description = "The most recent source AMI."
   default     = true
 }
 
 variable "aws_source_ami_owners" {
   type        = list(string)
-  description = "The owners of the source AMI. If using HCP Packer, this will be ignored."
+  description = "The owners of the source AMI."
   default     = ["amazon"]
+}
+
+variable "aws_source_ami_id" {
+  type        = string
+  description = "Specifies the source AMI to use for the instance. If using aws_source_ami_filters, this will be ignored."
+  default     = ""
 }
 
 variable "aws_associate_public_ip_address" {
