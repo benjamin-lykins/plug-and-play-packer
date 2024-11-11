@@ -1,6 +1,5 @@
 # Ubuntu 24.04 LTS
 ## AWS
-
 aws_skip_create_ami = true
 
 aws_source_ami_filters = {
@@ -8,11 +7,8 @@ aws_source_ami_filters = {
   root-device-type    = "ebs"
   virtualization-type = "hvm"
 }
-
 build_shell_scripts = [
   "packer/shared/scripts/debian/base.sh",
   ]
-
 aws_ssh_username = "ubuntu"
-
 os_type = "linux"

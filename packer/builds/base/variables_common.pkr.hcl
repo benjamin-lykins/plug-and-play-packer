@@ -10,6 +10,12 @@ variable "os_type" {
   default     = "linux"
 }
 
+variable "os_distribution" {
+  type        = string
+  description = "The operating system version."
+  default     = "debian" # debian, rhel
+}
+
 variable "os_version" {
   type        = string
   description = "The operating system version."

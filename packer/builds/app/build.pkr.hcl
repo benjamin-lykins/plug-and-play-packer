@@ -7,37 +7,48 @@ locals {
 build {
   sources = local.build_source
 
-  # Probably not the best method to get this to work, but it works for now. 
+# Probably not the best method to get this to work, but it works for now. 
   provisioner "shell" {
     only              = var.os_type == "linux" ? ["amazon-ebs.this", "azure-arm.this", "googlecompute.this"] : ["foo.this"]
     scripts           = var.build_shell_scripts
     environment_vars  = var.build_shell_script_environment_vars
-    valid_exit_codes  = var.build_shell_script_exit_codes
+    valid_exit_codes        = var.build_shell_script_exit_codes
     execute_command   = var.build_shell_script_execute_command
     expect_disconnect = var.build_shell_script_expect_disconnect
   }
 
-  # Probably not the best method to get this to work, but it works for now. 
+# Probably not the best method to get this to work, but it works for now. 
   provisioner "powershell" {
     only              = var.os_type == "windows" ? ["amazon-ebs.this", "azure-arm.this", "googlecompute.this"] : ["foo.this"]
     scripts           = var.build_powershell_scripts
     environment_vars  = var.build_powershell_script_environment_vars
     use_pwsh          = var.build_powershell_script_use_pwsh
-    valid_exit_codes  = var.build_powershell_script_exit_codes
+    valid_exit_codes        = var.build_powershell_script_exit_codes
     execute_command   = var.build_powershell_script_execute_command
-    elevated_user     = build.User     #https://developer.hashicorp.com/packer/docs/templates/legacy_json_templates/engine
-    elevated_password = build.Password #https://developer.hashicorp.com/packer/docs/templates/legacy_json_templates/engine
+    elevated_user     = build.User
+    elevated_password = build.Password
     execution_policy  = var.build_powershell_script_execution_policy
   }
+
+  # AWS Deprovisionining
+  ## https://developer.hashicorp.com/packer/integrations/hashicorp/azure/latest/components/builder/arm#deprovision
+  provisioner "shell" {
+    only = var.os_type == "linux" ? ["amazon-ebs.this"] : ["foo.this"]
+    script = "packer/shared/scripts/${var.os_distribution}/deprovision-aws.sh"
+  }
+
+  provisioner "powershell" {
+    only = var.os_type == "windows" ? ["amazon-ebs.this"] : ["foo.this"]
+
+    script = "packer/shared/scripts/aws/deprovision.ps1"
+  }
+
 
   # Azure Deprovisionining
   ## https://developer.hashicorp.com/packer/integrations/hashicorp/azure/latest/components/builder/arm#deprovision
   provisioner "shell" {
     only = var.os_type == "linux" ? ["azure-arm.this"] : ["foo.this"]
-    inline = [
-      "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
-    ]
-    inline_shebang = "/bin/sh -ex"
+    script = "packer/shared/scripts/${var.os_distribution}/deprovision-aws.sh"
   }
 
   provisioner "powershell" {
