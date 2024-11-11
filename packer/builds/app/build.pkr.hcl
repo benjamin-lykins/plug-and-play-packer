@@ -7,36 +7,33 @@ locals {
 build {
   sources = local.build_source
 
-  # Ok, no clue why this works, but it does.  I'm going to leave it alone for now.
-  # I would expect the opposite logic to be true, but it does not seem to work that way.
+  # Probably not the best method to get this to work, but it works for now. 
   provisioner "shell" {
-    only              = var.os_type != "linux" ? ["*.this"] : [""]
+    only              = var.os_type == "linux" ? ["amazon-ebs.this", "azure-arm.this", "googlecompute.this"] : ["foo.this"]
     scripts           = var.build_shell_scripts
     environment_vars  = var.build_shell_script_environment_vars
-    exit_codes        = var.build_shell_script_exit_codes
+    valid_exit_codes  = var.build_shell_script_exit_codes
     execute_command   = var.build_shell_script_execute_command
     expect_disconnect = var.build_shell_script_expect_disconnect
   }
 
-  # Same thing, no clue why this works, but it does.  I'm going to leave it alone for now.
-  # I would expect the opposite logic to be true, but it does not seem to work that way.
+  # Probably not the best method to get this to work, but it works for now. 
   provisioner "powershell" {
-    only              = var.os_type != "windows" ? ["*.this"] : [""]
-    scripts           = var.build_scripts
+    only              = var.os_type == "windows" ? ["amazon-ebs.this", "azure-arm.this", "googlecompute.this"] : ["foo.this"]
+    scripts           = var.build_powershell_scripts
     environment_vars  = var.build_powershell_script_environment_vars
     use_pwsh          = var.build_powershell_script_use_pwsh
-    exit_codes        = var.build_powershell_script_exit_codes
+    valid_exit_codes  = var.build_powershell_script_exit_codes
     execute_command   = var.build_powershell_script_execute_command
-    elevated_user     = var.build_powershell_script_elevated_user
-    elevated_password = build.password
+    elevated_user     = build.User     #https://developer.hashicorp.com/packer/docs/templates/legacy_json_templates/engine
+    elevated_password = build.Password #https://developer.hashicorp.com/packer/docs/templates/legacy_json_templates/engine
     execution_policy  = var.build_powershell_script_execution_policy
   }
 
   # Azure Deprovisionining
   ## https://developer.hashicorp.com/packer/integrations/hashicorp/azure/latest/components/builder/arm#deprovision
   provisioner "shell" {
-    only            = var.os_type != "linux" ? ["azure-arm.this"] : [""]
-    execute_command = "chmod +x {{ .Path }}; {{ .Vars }} sudo -E sh '{{ .Path }}'"
+    only = var.os_type == "linux" ? ["azure-arm.this"] : ["foo.this"]
     inline = [
       "/usr/sbin/waagent -force -deprovision+user && export HISTSIZE=0 && sync"
     ]
@@ -44,7 +41,7 @@ build {
   }
 
   provisioner "powershell" {
-    only = var.os_type != "windows" ? ["azure-arm.this"] : [""]
+    only = var.os_type == "windows" ? ["azure-arm.this"] : ["foo.this"]
 
     inline = [
       "# If Guest Agent services are installed, make sure that they have started.",
@@ -56,7 +53,7 @@ build {
   }
 
   dynamic "hcp_packer_registry" {
-    for_each = var.hcp_packer_registry_enabled ? [1] : []
+    for_each = var.hcp_packer_registry_push ? [1] : []
     content {
       bucket_name = var.bucket_name
       description = var.bucket_description

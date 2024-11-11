@@ -44,7 +44,7 @@ source "amazon-ebs" "this" {
   instance_type = var.aws_instance_type #t2.micro
 
   dynamic "source_ami_filter" {
-    for_each = var.aws_source_ami_filters != {} ? [1] : []
+    for_each = var.aws_source_ami_filters != {} && var.aws_source_ami_id == null ? [1] : []
     content {
       filters     = var.aws_source_ami_filters
       most_recent = var.aws_source_ami_most_recent

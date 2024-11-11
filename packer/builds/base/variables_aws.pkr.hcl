@@ -111,7 +111,7 @@ variable "aws_source_ami_owners" {
 variable "aws_source_ami_id" {
   type        = string
   description = "Specifies the source AMI to use for the instance. If using aws_source_ami_filters, this will be ignored."
-  default     = ""
+  default     = null
 }
 
 variable "aws_associate_public_ip_address" {
@@ -129,11 +129,13 @@ variable "aws_user_data_file" {
 variable "aws_vpc_id" {
   type        = string
   description = "The VPC ID to use for the instance."
+  default     = null
 }
 
 variable "aws_subnet_id" {
   type        = string
   description = "The subnet ID to use for the instance."
+  default     = null
 }
 
 # Communicator Configuration
