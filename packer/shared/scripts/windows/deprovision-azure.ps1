@@ -1,3 +1,5 @@
+https://developer.hashicorp.com/packer/integrations/hashicorp/azure/latest/components/builder/arm#windows
+
 foreach (
     $service in Get-Service -Name RdAgent, WindowsAzureTelemetryService, WindowsAzureGuestAgent -ErrorAction SilentlyContinue) {
     while (

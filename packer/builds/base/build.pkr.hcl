@@ -52,7 +52,19 @@ build {
 
   provisioner "powershell" {
     only = var.os_type == "windows" ? ["azure-arm.this"] : ["foo.this"]
-    script = "packer/shared/scripts/windows/deprovision-azure.sh"
+    script = "packer/shared/scripts/windows/deprovision-azure.ps1"
+  }
+
+  # Google Deprovisionining
+  ## https://developer.hashicorp.com/packer/integrations/hashicorp/azure/latest/components/builder/arm#deprovision
+  provisioner "shell" {
+    only = var.os_type == "linux" ? ["googlecompute.this"] : ["foo.this"]
+    script = "packer/shared/scripts/${var.os_distribution}/deprovision-google.sh"
+  }
+
+  provisioner "powershell" {
+    only = var.os_type == "windows" ? ["googlecompute.this"] : ["foo.this"]
+    script = "packer/shared/scripts/windows/deprovision-google.ps1"
   }
 
 

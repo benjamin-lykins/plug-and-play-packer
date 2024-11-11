@@ -1,6 +1,6 @@
 #bin/bash -ex
 
-# I don't believe there is anything specific with AWS needing cleaned up prior to creating an image.
+# I don't believe there is anything specific with Google needing cleaned up prior to creating an image.
 
 # Cleaning logs.
 echo "Cleaning logs..."
