@@ -1,6 +1,7 @@
 #bin/bash -ex
 
 # I don't believe there is anything specific with Google needing cleaned up prior to creating an image.
+# I've just always used the same script for most of my images.
 
 # Cleaning logs.
 echo "Cleaning logs..."
